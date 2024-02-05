@@ -61,7 +61,7 @@ public class UCSBOrganizationController extends ApiController {
         return savedCommons;
     }
 
-    @Operation(summary= "Get a single commons")
+    @Operation(summary= "Get a single organization")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
     public UCSBOrganization getById(
@@ -84,7 +84,7 @@ public class UCSBOrganizationController extends ApiController {
         return genericMessage("UCSBOrganization with id %s deleted".formatted(code));
     }
 
-    @Operation(summary= "Update a single commons")
+    @Operation(summary= "Update a single organization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public UCSBOrganization updateCommons(
