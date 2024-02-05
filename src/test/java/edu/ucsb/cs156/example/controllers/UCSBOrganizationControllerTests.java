@@ -227,4 +227,54 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+    // Tests for DELETE /api/ucsborganization?...
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void admin_can_delete_a_date() throws Exception {
+        // arrange
+
+        UCSBOrganization OSLI = UCSBOrganization.builder()
+                .orgCode("OSLI")
+                .orgTranslationShort("STUDENT LIFE")
+                .orgTranslation("OFFICE OF STUDENT LIFE")
+                .inactive(false)
+                .build();
+
+        when(ucsbOrganizationRepository.findById(eq("OSLI"))).thenReturn(Optional.of(OSLI));
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/ucsborganization?code=OSLI")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(ucsbOrganizationRepository, times(1)).findById("OSLI");
+        verify(ucsbOrganizationRepository, times(1)).delete(any());
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("UCSBOrganization with id OSLI deleted", json.get("message"));
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void admin_tries_to_delete_non_existant_commons_and_gets_right_error_message()
+            throws Exception {
+        // arrange
+
+        when(ucsbOrganizationRepository.findById(eq("FAKE"))).thenReturn(Optional.empty());
+
+        // act
+        MvcResult response = mockMvc.perform(
+                delete("/api/ucsborganization?code=FAKE")
+                        .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        // assert
+        verify(ucsbOrganizationRepository, times(1)).findById("FAKE");
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("UCSBOrganization with id FAKE not found", json.get("message"));
+    }
 }
