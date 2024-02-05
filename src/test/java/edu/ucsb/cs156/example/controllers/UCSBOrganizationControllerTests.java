@@ -134,4 +134,30 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void an_admin_user_can_post_a_new_inactive_commons() throws Exception {
+    // arrange
+        UCSBOrganization inactiveOrg = UCSBOrganization.builder()
+                .orgCode("INACTIVE")
+                .orgTranslationShort("Inactive Org")
+                .orgTranslation("Inactive Organization")
+                .inactive(true)
+                .build();
+
+        when(ucsbOrganizationRepository.save(eq(inactiveOrg))).thenReturn(inactiveOrg);
+
+        // act
+        MvcResult response = mockMvc.perform(
+                post("/api/ucsborganization/post?orgCode=INACTIVE&orgTranslationShort=Inactive Org&orgTranslation=Inactive Organization&inactive=true")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(ucsbOrganizationRepository, times(1)).save(inactiveOrg);
+        String expectedJson = mapper.writeValueAsString(inactiveOrg);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+        }
 }
