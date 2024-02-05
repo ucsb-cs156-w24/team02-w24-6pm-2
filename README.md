@@ -2,6 +2,17 @@
 
 Instructions: <https://ucsb-cs156.github.io/w24/lab/team02.html>
 
+```
+| Table                       | Team Member  | Github Id     |
+|-----------------------------|--------------|---------------|
+| `UCSBDiningCommonsMenuItem` | Mihir Bharti | mbharti12     |
+| `UCSBOrganization`          | Kevin Lee    | kjlee2504     |
+| `RecommendationRequest`     | Thienan Vu   | thienanvuu    |
+| `MenuItemReview`            | Demir Ince   | DemirInce     |
+| `HelpRequest`               | (unassigned) | (unassigned)  |
+| `Articles`                  | Vincent Zhu  | vincentlinzhu |
+```
+
 Deployments:
 
 * Prod: <https://team02.dokku-10.cs.ucsb.edu/>
