@@ -39,7 +39,7 @@ public class UCSBOrganizationController extends ApiController {
         return commons;
     }
 
-    @Operation(summary= "Create a new commons")
+    @Operation(summary= "Create a new organization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public UCSBOrganization postCommons(
