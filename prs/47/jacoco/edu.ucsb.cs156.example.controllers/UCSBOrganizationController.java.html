@@ -39,7 +39,7 @@ import javax.validation.Valid;
 <span class="fc" id="L39">        return commons;</span>
     }
 
-    @Operation(summary= &quot;Create a new commons&quot;)
+    @Operation(summary= &quot;Create a new organization&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/post&quot;)
     public UCSBOrganization postCommons(
