@@ -67,7 +67,7 @@ public RecommendationRequests postRequest(
 }
 
 
-    @Operation(summary = &quot;Get a single recommendation request&quot;)
+   @Operation(summary = &quot;Get a single recommendation request&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;&quot;)
     public RecommendationRequests getById(
