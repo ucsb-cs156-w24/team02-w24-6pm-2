@@ -245,7 +245,7 @@ public class RecommendationRequestsControllerTests extends ControllerTestCase {
                 assertEquals(expectedJson, responseString);
         }
 
-        @WithMockUser(roles = { "USER" })
+       @WithMockUser(roles = { "USER" })
         @Test
         public void test_that_logged_in_user_gets_not_found_when_id_does_not_exist() throws Exception {
         // arrange
@@ -257,6 +257,26 @@ public class RecommendationRequestsControllerTests extends ControllerTestCase {
         mockMvc.perform(get("/api/recommendationrequests?id=" + nonExistentId))
                 .andExpect(status().isNotFound());
                 
+        }
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void test1_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+                // arrange
+
+                when(recommendationRequestsRepository.findById(eq(7L))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/recommendationrequests?id=7"))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+
+                verify(recommendationRequestsRepository, times(1)).findById(eq(7L));
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("EntityNotFoundException", json.get("type"));
+                assertEquals("RecommendationRequests with id 7 not found", json.get("message"));
         }
 
         
