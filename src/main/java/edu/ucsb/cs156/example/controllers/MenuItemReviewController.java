@@ -9,6 +9,7 @@ import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import liquibase.pro.packaged.me;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +34,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/menuitemreview")
 @RestController
 @Slf4j
-public class MenuItemReviewController {
+public class MenuItemReviewController extends ApiController{
 
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
@@ -69,5 +70,26 @@ public class MenuItemReviewController {
         MenuItemReview savedReviews = menuItemReviewRepository.save(menuItemReview);
 
         return savedReviews;
+    }
+
+    @Operation(summary= "Update a single date")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public MenuItemReview updateUCSBDate(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid MenuItemReview incoming) {
+
+        MenuItemReview review = menuItemReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(MenuItemReview.class, id));
+
+        review.setItemId(incoming.getItemId());
+        review.setReviewerEmail(incoming.getReviewerEmail());
+        review.setStars(incoming.getStars());
+        review.setDateReviewed(incoming.getDateReviewed());
+        review.setComments(incoming.getComments());
+
+        menuItemReviewRepository.save(review);
+
+        return review;
     }
 }
