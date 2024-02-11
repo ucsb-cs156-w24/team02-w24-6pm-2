@@ -60,6 +60,50 @@ import javax.validation.Valid;
 
 <span class="fc" id="L61">        return savedCommons;</span>
     }
+
+    @Operation(summary= &quot;Get a single organization&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public UCSBOrganization getById(
+            @Parameter(name=&quot;code&quot;) @RequestParam String code) {
+<span class="fc" id="L69">        UCSBOrganization commons = ucsbOrganizationRepository.findById(code)</span>
+<span class="fc" id="L70">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, code));</span>
+
+<span class="fc" id="L72">        return commons;</span>
+    }
+
+    @Operation(summary= &quot;Delete a UCSBOrganization&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteCommons(
+            @Parameter(name=&quot;code&quot;) @RequestParam String code) {
+<span class="fc" id="L80">        UCSBOrganization commons = ucsbOrganizationRepository.findById(code)</span>
+<span class="fc" id="L81">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, code));</span>
+
+<span class="fc" id="L83">        ucsbOrganizationRepository.delete(commons);</span>
+<span class="fc" id="L84">        return genericMessage(&quot;UCSBOrganization with id %s deleted&quot;.formatted(code));</span>
+    }
+
+    @Operation(summary= &quot;Update a single organization&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBOrganization updateCommons(
+            @Parameter(name=&quot;code&quot;) @RequestParam String code,
+            @RequestBody @Valid UCSBOrganization incoming) {
+
+<span class="fc" id="L94">        UCSBOrganization commons = ucsbOrganizationRepository.findById(code)</span>
+<span class="fc" id="L95">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, code));</span>
+
+
+<span class="fc" id="L98">        commons.setOrgCode(incoming.getOrgCode());  </span>
+<span class="fc" id="L99">        commons.setOrgTranslationShort(incoming.getOrgTranslationShort());  </span>
+<span class="fc" id="L100">        commons.setOrgTranslation(incoming.getOrgTranslation());</span>
+<span class="fc" id="L101">        commons.setInactive(incoming.getInactive());</span>
+
+<span class="fc" id="L103">        ucsbOrganizationRepository.save(commons);</span>
+
+<span class="fc" id="L105">        return commons;</span>
+    }
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
