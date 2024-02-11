@@ -22,7 +22,7 @@ public class MenuItemReview {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   
-  private long itemID;
+  private long itemId;
   private String reviewerEmail;
   private int stars;
   private LocalDateTime dateReviewed;

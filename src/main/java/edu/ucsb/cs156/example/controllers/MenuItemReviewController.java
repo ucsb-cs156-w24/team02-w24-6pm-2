@@ -60,7 +60,7 @@ public class MenuItemReviewController {
         //log.info("localDateTime={}", localDateTime);
 
         MenuItemReview menuItemReview = new MenuItemReview();
-        menuItemReview.setItemID(itemID);
+        menuItemReview.setItemId(itemID);
         menuItemReview.setReviewerEmail(reviewerEmail);
         menuItemReview.setStars(stars);
         menuItemReview.setDateReviewed(localDateTime);
