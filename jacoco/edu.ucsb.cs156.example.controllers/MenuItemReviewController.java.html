@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 @RequestMapping(&quot;/api/menuitemreview&quot;)
 @RestController
 <span class="fc" id="L35">@Slf4j</span>
-<span class="fc" id="L36">public class MenuItemReviewController {</span>
+<span class="fc" id="L36">public class MenuItemReviewController extends ApiController{</span>
 
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
@@ -69,6 +69,18 @@ import java.time.LocalDateTime;
 <span class="fc" id="L69">        MenuItemReview savedReviews = menuItemReviewRepository.save(menuItemReview);</span>
 
 <span class="fc" id="L71">        return savedReviews;</span>
+    }
+
+    @Operation(summary= &quot;Delete a UCSBDate&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteUCSBDate(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L79">        MenuItemReview review = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L80">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDate.class, id));</span>
+
+<span class="fc" id="L82">        menuItemReviewRepository.delete(review);</span>
+<span class="fc" id="L83">        return genericMessage(&quot;UCSBDate with id %s deleted&quot;.formatted(id));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
