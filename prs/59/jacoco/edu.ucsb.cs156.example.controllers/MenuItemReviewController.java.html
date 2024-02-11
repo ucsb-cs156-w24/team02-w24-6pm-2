@@ -9,7 +9,6 @@ import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import liquibase.pro.packaged.me;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,8 +32,8 @@ import java.time.LocalDateTime;
 @Tag(name = &quot;MenuItemReview&quot;)
 @RequestMapping(&quot;/api/menuitemreview&quot;)
 @RestController
-<span class="fc" id="L36">@Slf4j</span>
-<span class="fc" id="L37">public class MenuItemReviewController extends ApiController{</span>
+<span class="fc" id="L35">@Slf4j</span>
+<span class="fc" id="L36">public class MenuItemReviewController {</span>
 
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
@@ -43,8 +42,8 @@ import java.time.LocalDateTime;
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;/all&quot;)
     public Iterable&lt;MenuItemReview&gt; allReviews() {
-<span class="fc" id="L46">        Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
-<span class="fc" id="L47">        return reviews;</span>
+<span class="fc" id="L45">        Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
+<span class="fc" id="L46">        return reviews;</span>
     }
 
     @Operation(summary= &quot;Create a new review&quot;)
@@ -60,37 +59,16 @@ import java.time.LocalDateTime;
 
         //log.info(&quot;localDateTime={}&quot;, localDateTime);
 
-<span class="fc" id="L63">        MenuItemReview menuItemReview = new MenuItemReview();</span>
-<span class="fc" id="L64">        menuItemReview.setItemId(itemID);</span>
-<span class="fc" id="L65">        menuItemReview.setReviewerEmail(reviewerEmail);</span>
-<span class="fc" id="L66">        menuItemReview.setStars(stars);</span>
-<span class="fc" id="L67">        menuItemReview.setDateReviewed(localDateTime);</span>
-<span class="fc" id="L68">        menuItemReview.setComments(comments);</span>
+<span class="fc" id="L62">        MenuItemReview menuItemReview = new MenuItemReview();</span>
+<span class="fc" id="L63">        menuItemReview.setItemId(itemID);</span>
+<span class="fc" id="L64">        menuItemReview.setReviewerEmail(reviewerEmail);</span>
+<span class="fc" id="L65">        menuItemReview.setStars(stars);</span>
+<span class="fc" id="L66">        menuItemReview.setDateReviewed(localDateTime);</span>
+<span class="fc" id="L67">        menuItemReview.setComments(comments);</span>
 
-<span class="fc" id="L70">        MenuItemReview savedReviews = menuItemReviewRepository.save(menuItemReview);</span>
+<span class="fc" id="L69">        MenuItemReview savedReviews = menuItemReviewRepository.save(menuItemReview);</span>
 
-<span class="fc" id="L72">        return savedReviews;</span>
-    }
-
-    @Operation(summary= &quot;Update a single date&quot;)
-    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    @PutMapping(&quot;&quot;)
-    public MenuItemReview updateUCSBDate(
-            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
-            @RequestBody @Valid MenuItemReview incoming) {
-
-<span class="fc" id="L82">        MenuItemReview review = menuItemReviewRepository.findById(id)</span>
-<span class="fc" id="L83">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
-
-<span class="fc" id="L85">        review.setItemId(incoming.getItemId());</span>
-<span class="fc" id="L86">        review.setReviewerEmail(incoming.getReviewerEmail());</span>
-<span class="fc" id="L87">        review.setStars(incoming.getStars());</span>
-<span class="fc" id="L88">        review.setDateReviewed(incoming.getDateReviewed());</span>
-<span class="fc" id="L89">        review.setComments(incoming.getComments());</span>
-
-<span class="fc" id="L91">        menuItemReviewRepository.save(review);</span>
-
-<span class="fc" id="L93">        return review;</span>
+<span class="fc" id="L71">        return savedReviews;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
