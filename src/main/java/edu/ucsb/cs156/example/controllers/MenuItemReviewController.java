@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/menuitemreview")
 @RestController
 @Slf4j
-public class MenuItemReviewController {
+public class MenuItemReviewController extends ApiController{
 
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
@@ -69,5 +69,17 @@ public class MenuItemReviewController {
         MenuItemReview savedReviews = menuItemReviewRepository.save(menuItemReview);
 
         return savedReviews;
+    }
+
+    @Operation(summary= "Delete a UCSBDate")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteUCSBDate(
+            @Parameter(name="id") @RequestParam Long id) {
+        MenuItemReview review = menuItemReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBDate.class, id));
+
+        menuItemReviewRepository.delete(review);
+        return genericMessage("UCSBDate with id %s deleted".formatted(id));
     }
 }
