@@ -77,4 +77,13 @@ public RecommendationRequests postRequest(
 
             return recommendationRequests;
     } 
+    @Operation(summary = "Delete a recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteRequest(@Parameter(name="id") @RequestParam Long id) {
+        RecommendationRequests request = recommendationRequestsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequests.class, id));
+        recommendationRequestsRepository.delete(request);
+        return genericMessage("RecommendationRequests with id %s deleted".formatted(id));
+    }
 }
