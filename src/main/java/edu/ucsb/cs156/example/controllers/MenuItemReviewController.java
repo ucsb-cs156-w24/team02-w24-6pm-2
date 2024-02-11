@@ -80,5 +80,18 @@ public class MenuItemReviewController extends ApiController{
                 .orElseThrow(() -> new EntityNotFoundException(MenuItemReview.class, id));
 
         return review;
+      
+    } 
+      
+    @Operation(summary= "Delete a UCSBDate")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteUCSBDate(
+            @Parameter(name="id") @RequestParam Long id) {
+        MenuItemReview review = menuItemReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBDate.class, id));
+
+        menuItemReviewRepository.delete(review);
+        return genericMessage("UCSBDate with id %s deleted".formatted(id));
     }
 }
