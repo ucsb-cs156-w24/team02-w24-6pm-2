@@ -7,6 +7,4 @@ import edu.ucsb.cs156.example.entities.MenuItemReview;
 
 
 @Repository
-public interface MenuItemReviewRepository extends CrudRepository<MenuItemReview, Long> {
-  //Iterable<MenuItemReview> findAllByItemIdIterable(long itemID);
-}
+public interface MenuItemReviewRepository extends CrudRepository<MenuItemReview, Long> {}
