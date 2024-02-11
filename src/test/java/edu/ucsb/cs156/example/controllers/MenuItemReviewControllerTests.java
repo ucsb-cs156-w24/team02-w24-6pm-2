@@ -201,6 +201,6 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
             verify(menuItemReviewRepository, times(1)).findById(eq(7L));
             Map<String, Object> json = responseToJson(response);
             assertEquals("EntityNotFoundException", json.get("type"));
-            assertEquals("UCSBDate with id 7 not found", json.get("message"));
+            assertEquals("MenuItemReview with id 7 not found", json.get("message"));
     }
 }
