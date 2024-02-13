@@ -41,7 +41,8 @@ public class RecommendationRequestsController extends ApiController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<RecommendationRequests> allRequests() {
-        return recommendationRequestsRepository.findAll();
+        Iterable<RecommendationRequests> recommendationRequests = recommendationRequestsRepository.findAll();
+        return recommendationRequests;
     }
 
     @Operation(summary = "Create a new recommendation request")
@@ -63,7 +64,8 @@ public RecommendationRequests postRequest(
     request.setDateNeeded(dateNeeded);
     request.setDone(done);
 
-    return recommendationRequestsRepository.save(request);
+    RecommendationRequests savedRequest = recommendationRequestsRepository.save(request);
+    return savedRequest;
 }
 
 
