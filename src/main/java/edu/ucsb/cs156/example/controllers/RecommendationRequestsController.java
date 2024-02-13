@@ -41,7 +41,8 @@ public class RecommendationRequestsController extends ApiController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<RecommendationRequests> allRequests() {
-        return recommendationRequestsRepository.findAll();
+        Iterable<RecommendationRequests> recommendationRequests = recommendationRequestsRepository.findAll();
+        return recommendationRequests;
     }
 
     @Operation(summary = "Create a new recommendation request")
@@ -63,7 +64,8 @@ public RecommendationRequests postRequest(
     request.setDateNeeded(dateNeeded);
     request.setDone(done);
 
-    return recommendationRequestsRepository.save(request);
+    RecommendationRequests savedRequest = recommendationRequestsRepository.save(request);
+    return savedRequest;
 }
 
 
@@ -86,4 +88,26 @@ public RecommendationRequests postRequest(
         recommendationRequestsRepository.delete(request);
         return genericMessage("RecommendationRequests with id %s deleted".formatted(id));
     }
+
+    @Operation(summary = "Update a single recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public RecommendationRequests updateRequest(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid RecommendationRequests incoming) {
+
+        RecommendationRequests request = recommendationRequestsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequests.class, id));
+
+        request.setRequesterEmail(incoming.getRequesterEmail());
+        request.setProfessorEmail(incoming.getProfessorEmail());
+        request.setExplanation(incoming.getExplanation());
+        request.setDateRequested(incoming.getDateRequested());
+        request.setDateNeeded(incoming.getDateNeeded());
+        request.setDone(incoming.getDone());
+
+        recommendationRequestsRepository.save(request);
+        return request;
+    }
+
 }
