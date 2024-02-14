@@ -255,84 +255,84 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 assertEquals("UCSBArticles with id 15 not found", json.get("message"));
         }
 
-        // // Tests for PUT /api/ucsbarticles?id=... 
+        // Tests for PUT /api/ucsbarticles?id=... 
 
-        // @WithMockUser(roles = { "ADMIN", "USER" })
-        // @Test
-        // public void admin_can_edit_an_existing_ucsbarticle() throws Exception {
-        //         // arrange
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_edit_an_existing_ucsbarticle() throws Exception {
+                // arrange
 
-        //         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-        //         LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
+                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
 
-        //         UCSBArticles ucsbArticleOrig = UCSBArticles.builder()
-        //                         .title("a")
-        //                         .url("b")
-        //                         .explanation("c")
-        //                         .email("d")
-        //                         .dateAdded(ldt1)
-        //                         .build();
+                UCSBArticles ucsbArticleOrig = UCSBArticles.builder()
+                                .title("a")
+                                .url("b")
+                                .explanation("c")
+                                .email("d")
+                                .dateAdded(ldt1)
+                                .build();
 
-        //         UCSBArticles ucsbArticleEdited = UCSBArticles.builder()
-        //                         .title("aa")
-        //                         .url("bb")
-        //                         .explanation("cc")
-        //                         .email("dd")
-        //                         .dateAdded(ldt2)
-        //                         .build();
+                UCSBArticles ucsbArticleEdited = UCSBArticles.builder()
+                                .title("aa")
+                                .url("bb")
+                                .explanation("cc")
+                                .email("dd")
+                                .dateAdded(ldt2)
+                                .build();
 
-        //         String requestBody = mapper.writeValueAsString(ucsbArticleEdited);
+                String requestBody = mapper.writeValueAsString(ucsbArticleEdited);
 
-        //         when(ucsbArticlesRepository.findById(eq(67L))).thenReturn(Optional.of(ucsbArticleOrig));
+                when(ucsbArticlesRepository.findById(eq(67L))).thenReturn(Optional.of(ucsbArticleOrig));
 
-        //         // act
-        //         MvcResult response = mockMvc.perform(
-        //                         put("/api/ucsbarticles?id=67")
-        //                                         .contentType(MediaType.APPLICATION_JSON)
-        //                                         .characterEncoding("utf-8")
-        //                                         .content(requestBody)
-        //                                         .with(csrf()))
-        //                         .andExpect(status().isOk()).andReturn();
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsbarticles?id=67")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
 
-        //         // assert
-        //         verify(ucsbArticlesRepository, times(1)).findById(67L);
-        //         verify(ucsbArticlesRepository, times(1)).save(ucsbArticleEdited); // should be saved with correct user
-        //         String responseString = response.getResponse().getContentAsString();
-        //         assertEquals(requestBody, responseString);
-        // }
+                // assert
+                verify(ucsbArticlesRepository, times(1)).findById(67L);
+                verify(ucsbArticlesRepository, times(1)).save(ucsbArticleEdited); // should be saved with correct user
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(requestBody, responseString);
+        }
 
         
-        // @WithMockUser(roles = { "ADMIN", "USER" })
-        // @Test
-        // public void admin_cannot_edit_ucsbarticle_that_does_not_exist() throws Exception {
-        //         // arrange
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_cannot_edit_ucsbarticle_that_does_not_exist() throws Exception {
+                // arrange
 
-        //         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
-        //         UCSBArticles ucsbEditedArticle = UCSBArticles.builder()
-        //                         .title("a")
-        //                         .url("b")
-        //                         .explanation("c")
-        //                         .email("d")
-        //                         .dateAdded(ldt1)
-        //                         .build();
+                UCSBArticles ucsbEditedArticle = UCSBArticles.builder()
+                                .title("a")
+                                .url("b")
+                                .explanation("c")
+                                .email("d")
+                                .dateAdded(ldt1)
+                                .build();
 
-        //         String requestBody = mapper.writeValueAsString(ucsbEditedArticle);
+                String requestBody = mapper.writeValueAsString(ucsbEditedArticle);
 
-        //         when(ucsbArticlesRepository.findById(eq(67L))).thenReturn(Optional.empty());
+                when(ucsbArticlesRepository.findById(eq(67L))).thenReturn(Optional.empty());
 
-        //         // act
-        //         MvcResult response = mockMvc.perform(
-        //                         put("/api/ucsbarticles?id=67")
-        //                                         .contentType(MediaType.APPLICATION_JSON)
-        //                                         .characterEncoding("utf-8")
-        //                                         .content(requestBody)
-        //                                         .with(csrf()))
-        //                         .andExpect(status().isNotFound()).andReturn();
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsbarticles?id=67")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
 
-        //         // assert
-        //         verify(ucsbArticlesRepository, times(1)).findById(67L);
-        //         Map<String, Object> json = responseToJson(response);
-        //         assertEquals("UCSBArticles with id 67 not found", json.get("message"));
-        // }
+                // assert
+                verify(ucsbArticlesRepository, times(1)).findById(67L);
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("UCSBArticles with id 67 not found", json.get("message"));
+        }
 }
