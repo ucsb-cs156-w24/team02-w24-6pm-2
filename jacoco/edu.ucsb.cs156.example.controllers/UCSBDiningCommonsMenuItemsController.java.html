@@ -34,14 +34,13 @@ import javax.validation.Valid;
 
     @Operation(summary= &quot;List all ucsb dining commons menu items&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @GetMapping(&quot;/all&quot;)
     public Iterable&lt;UCSBDiningCommonsMenuItems&gt; allCommonsMenuItems() {
-<span class="fc" id="L40">        Iterable&lt;UCSBDiningCommonsMenuItems&gt; commons = ucsbDiningCommonsMenuItemsRepository.findAll();</span>
-<span class="fc" id="L41">        return commons;</span>
+<span class="fc" id="L39">        Iterable&lt;UCSBDiningCommonsMenuItems&gt; commons = ucsbDiningCommonsMenuItemsRepository.findAll();</span>
+<span class="fc" id="L40">        return commons;</span>
     }
 
-    @Operation(summary= &quot;Create a new commons menu items&quot;)
+    @Operation(summary= &quot;Create a new commons menu item&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/post&quot;)
     public UCSBDiningCommonsMenuItems postCommonsMenuItems(
@@ -52,27 +51,46 @@ import javax.validation.Valid;
         )
         {
 
-<span class="fc" id="L55">        UCSBDiningCommonsMenuItems commonsMenuItems = new UCSBDiningCommonsMenuItems();</span>
-<span class="fc" id="L56">        commonsMenuItems.setId(id);</span>
-<span class="fc" id="L57">        commonsMenuItems.setDiningCommonsCode(diningCommonsCode);</span>
-<span class="fc" id="L58">        commonsMenuItems.setName(name);</span>
-<span class="fc" id="L59">        commonsMenuItems.setStation(station);</span>
+<span class="fc" id="L54">        UCSBDiningCommonsMenuItems commonsMenuItems = new UCSBDiningCommonsMenuItems();</span>
+<span class="fc" id="L55">        commonsMenuItems.setId(id);</span>
+<span class="fc" id="L56">        commonsMenuItems.setDiningCommonsCode(diningCommonsCode);</span>
+<span class="fc" id="L57">        commonsMenuItems.setName(name);</span>
+<span class="fc" id="L58">        commonsMenuItems.setStation(station);</span>
 
-<span class="fc" id="L61">        UCSBDiningCommonsMenuItems savedCommonsMenuItems = ucsbDiningCommonsMenuItemsRepository.save(commonsMenuItems);</span>
+<span class="fc" id="L60">        UCSBDiningCommonsMenuItems savedCommonsMenuItems = ucsbDiningCommonsMenuItemsRepository.save(commonsMenuItems);</span>
 
-<span class="fc" id="L63">        return savedCommonsMenuItems;</span>
+<span class="fc" id="L62">        return savedCommonsMenuItems;</span>
     }
 
     @Operation(summary= &quot;Get a single commons menu item&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @GetMapping(&quot;&quot;)
     public UCSBDiningCommonsMenuItems getById(
             @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L72">        UCSBDiningCommonsMenuItems commonsMenuItems = ucsbDiningCommonsMenuItemsRepository.findById(id)</span>
-<span class="fc" id="L73">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItems.class, id));</span>
+<span class="fc" id="L70">        UCSBDiningCommonsMenuItems commonsMenuItems = ucsbDiningCommonsMenuItemsRepository.findById(id)</span>
+<span class="fc" id="L71">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItems.class, id));</span>
 
-<span class="fc" id="L75">        return commonsMenuItems;</span>
+<span class="fc" id="L73">        return commonsMenuItems;</span>
+    }
+
+    @Operation(summary= &quot;Update a single commons menu item&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBDiningCommonsMenuItems updateCommonsMenuItems(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid UCSBDiningCommonsMenuItems incoming) {
+
+<span class="fc" id="L83">        UCSBDiningCommonsMenuItems commonsMenuItems = ucsbDiningCommonsMenuItemsRepository.findById(id)</span>
+<span class="fc" id="L84">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItems.class, id));</span>
+
+        // commonsMenuItems.setId(incoming.getId());
+        // commonsMenuItems.setDiningCommonsCode(incoming.getDiningCommonsCode());
+<span class="fc" id="L88">        commonsMenuItems.setName(incoming.getName());</span>
+<span class="fc" id="L89">        commonsMenuItems.setStation(incoming.getStation());</span>
+
+<span class="fc" id="L91">        ucsbDiningCommonsMenuItemsRepository.save(commonsMenuItems);</span>
+
+<span class="fc" id="L93">        return commonsMenuItems;</span>
     }
 
     
