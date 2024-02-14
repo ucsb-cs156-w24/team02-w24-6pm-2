@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-w24/team02-w24-6pm-2
 owner: ucsb-cs156-w24
 repo_name: team02-w24-6pm-2
-pull_requests: []
+pull_requests: [{"author":{"id":"MDQ6VXNlcjkxMjk1MDY3","is_bot":false,"login":"vincentlinzhu","name":"Vincent Zhu"},"headRefName":"Vincent-Articles-Controller","number":68,"title":"Vincent articles controller","url":"https://github.com/ucsb-cs156-w24/team02-w24-6pm-2/pull/68"}]
