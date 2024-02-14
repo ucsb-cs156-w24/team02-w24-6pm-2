@@ -155,7 +155,7 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 assertEquals(expectedJson, responseString);
         }
 
-        // Tests for GET /api/ucsbdates?id=...
+        // Tests for GET /api/ucsbdiningcommonsmenuitems?id=...
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
@@ -190,7 +190,57 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 assertEquals(expectedJson, responseString);
         }
 
-        // Tests for PUT /api/ucsbdiningcommons?...
+        // Tests for DELETE /api/ucsbdiningcommonsmenuitems?...
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_delete_a_commons_menu_item() throws Exception {
+                // arrange
+
+                UCSBDiningCommonsMenuItems portola = UCSBDiningCommonsMenuItems.builder()
+                                .id(15L)
+                                .diningCommonsCode("portola")
+                                .name("Cream of Broccoli Soup (v)")
+                                .station("Greens & Grains")
+                                .build();
+
+                when(ucsbDiningCommonsMenuItemsRepository.findById(eq(15L))).thenReturn(Optional.of(portola));
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                delete("/api/ucsbdiningcommonsmenuitems?id=15")
+                                                .with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+                verify(ucsbDiningCommonsMenuItemsRepository, times(1)).findById(15L);
+                verify(ucsbDiningCommonsMenuItemsRepository, times(1)).delete(any());
+
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("UCSBDiningCommonsMenuItems with id 15 deleted", json.get("message"));
+        }
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_tries_to_delete_non_existant_commons_menu_item_and_gets_right_error_message()
+                        throws Exception {
+                // arrange
+
+                when(ucsbDiningCommonsMenuItemsRepository.findById(eq(15L))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                delete("/api/ucsbdiningcommonsmenuitems?id=15")
+                                                .with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+                verify(ucsbDiningCommonsMenuItemsRepository, times(1)).findById(15L);
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("UCSBDiningCommonsMenuItems with id 15 not found", json.get("message"));
+        }
+
+        // Tests for PUT /api/ucsbdiningcommonsmenuitems?...
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
