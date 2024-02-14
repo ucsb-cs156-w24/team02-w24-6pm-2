@@ -83,14 +83,12 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems ortega = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
                                 .diningCommonsCode("ortega")
                                 .name("Baked Pesto Pasta with Chicken")
                                 .station("Entree Specials")
                                 .build();
 
                 UCSBDiningCommonsMenuItems portola = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
                                 .diningCommonsCode("portola")
                                 .name("Cream of Broccoli Soup (v)")
                                 .station("Greens & Grains")
@@ -134,7 +132,6 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems ortega = UCSBDiningCommonsMenuItems.builder()
-                                .id(67L)
                                 .diningCommonsCode("ortega")
                                 .name("BakedPestoPastawithChicken")
                                 .station("EntreeSpecials")
@@ -170,7 +167,6 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems commonsMenuItems = UCSBDiningCommonsMenuItems.builder()
-                                .id(67L)
                                 .diningCommonsCode("ortega")
                                 .name("Baked Pesto Pasta with Chicken")
                                 .station("Entree Specials")
@@ -198,7 +194,6 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems portola = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
                                 .diningCommonsCode("portola")
                                 .name("Cream of Broccoli Soup (v)")
                                 .station("Greens & Grains")
@@ -248,15 +243,13 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems carrilloOrig = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
                                 .diningCommonsCode("carillo")
                                 .name("Cream of Broccoli Soup (v)")
                                 .station("Greens & Grains")
                                 .build();
 
                 UCSBDiningCommonsMenuItems carrilloEdited = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
-                                .diningCommonsCode("carillo")
+                                .diningCommonsCode("carillooo")
                                 .name("Potato Soup (v)")
                                 .station("Greens & Grains Station")
                                 .build();
@@ -288,7 +281,6 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
                 // arrange
 
                 UCSBDiningCommonsMenuItems editedCommonsMenuItems = UCSBDiningCommonsMenuItems.builder()
-                                .id(15L)
                                 .diningCommonsCode("carillo")
                                 .name("Cream of Broccoli Soup (v)")
                                 .station("Greens & Grains")
