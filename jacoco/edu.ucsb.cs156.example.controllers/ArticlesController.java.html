@@ -72,47 +72,47 @@ import java.time.LocalDateTime;
 <span class="fc" id="L72">        return savedUcsbArticle;</span>
     }
 
-    // @Operation(summary= &quot;Get a single article&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
-    // @GetMapping(&quot;&quot;)
-    // public UCSBArticles getById(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-    //     UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));
+    @Operation(summary= &quot;Get a single article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public UCSBArticles getById(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L80">        UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)</span>
+<span class="fc" id="L81">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));</span>
 
-    //     return ucsbArticle;
-    // }
+<span class="fc" id="L83">        return ucsbArticle;</span>
+    }
 
-    // @Operation(summary= &quot;Delete a UCSBArticles&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @DeleteMapping(&quot;&quot;)
-    // public Object deleteUCSBArticles(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-    //     UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));
+    @Operation(summary= &quot;Delete a UCSBArticles&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteUCSBArticles(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L91">        UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)</span>
+<span class="fc" id="L92">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));</span>
 
-    //     ucsbArticlesRepository.delete(ucsbArticle);
-    //     return genericMessage(&quot;UCSBArticles with id %s deleted&quot;.formatted(id));
-    // }
+<span class="fc" id="L94">        ucsbArticlesRepository.delete(ucsbArticle);</span>
+<span class="fc" id="L95">        return genericMessage(&quot;UCSBArticles with id %s deleted&quot;.formatted(id));</span>
+    }
 
-    // @Operation(summary= &quot;Update a single article&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @PutMapping(&quot;&quot;)
-    // public UCSBArticles updateUCSBArticles(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id,
-    //         @RequestBody @Valid UCSBArticles incoming) {
+    @Operation(summary= &quot;Update a single article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBArticles updateUCSBArticles(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid UCSBArticles incoming) {
 
-    //     UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));
+<span class="fc" id="L105">        UCSBArticles ucsbArticle = ucsbArticlesRepository.findById(id)</span>
+<span class="fc" id="L106">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBArticles.class, id));</span>
 
-    //     ucsbArticle.setTitle(incoming.getTitle());
-    //     ucsbArticle.setUrl(incoming.getUrl());
-    //     ucsbArticle.setExplanation(incoming.getExplanation());
-    //     ucsbArticle.setEmail(incoming.getEmail());
-    //     ucsbArticle.setDateAdded(incoming.getDateAdded());
-    //     ucsbArticlesRepository.save(ucsbArticle);
+<span class="fc" id="L108">        ucsbArticle.setTitle(incoming.getTitle());</span>
+<span class="fc" id="L109">        ucsbArticle.setUrl(incoming.getUrl());</span>
+<span class="fc" id="L110">        ucsbArticle.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L111">        ucsbArticle.setEmail(incoming.getEmail());</span>
+<span class="fc" id="L112">        ucsbArticle.setDateAdded(incoming.getDateAdded());</span>
+<span class="fc" id="L113">        ucsbArticlesRepository.save(ucsbArticle);</span>
 
-    //     return ucsbArticle;
-    // }
+<span class="fc" id="L115">        return ucsbArticle;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
